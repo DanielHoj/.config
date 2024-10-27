@@ -21,25 +21,30 @@ return {
 
   config = function()
     require("telescope").setup({
-      opts = {
-        defaults = {
-          layout_config = {
-            vertical = {
-              width = 0.75
-            }
-          },
-          path_display = {
-            filename_first = {
-              reverse_directories = true
-            }
-          },
-        }
+      defaults = {
+        layout_config = {
+          vertical = {
+            width = 0.75
+          }
+        },
+        path_display = {
+          filename_first = {
+            reverse_directories = true
+          }
+        },
       },
       extensions = {
         undo = {
         },
       },
+      pickers = {
+        find_files = {
+          theme = "dropdown",
+        },
+      },
     })
+    -- Enable telescope fzf native, if installed
+    pcall(require('telescope').load_extension, 'fzf')
     require("telescope").load_extension("undo")
     vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
   end,
