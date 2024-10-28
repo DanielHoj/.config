@@ -150,3 +150,6 @@ keymap.set("n", "<leader>rh", function() require('nvim-python-repl').toggle_vert
   { desc = "Create REPL in vertical or horizontal split" })
 keymap.set("n", "<leader>rw", function() require('nvim-python-repl').open_repl() end,
   { desc = "Opens the REPL in a window split" })
+
+-- NeoGit
+keymap.set("n", "<leader>ng", require("neogit").open)
