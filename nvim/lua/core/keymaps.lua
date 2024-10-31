@@ -66,9 +66,6 @@ keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, {})
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({ default_text = ":method:" }) end)
 keymap.set("n", "<leader>i", ':lua vim.diagnostic.open_float(nil, {focus=true, scope="cursor"})<CR>')
 
--- Git-blame
-keymap.set("n", "<leader>gb", ":GitBlameToggle<CR>") -- toggle git blame
-
 -- Harpoon
 keymap.set("n", "<leader>ha", require("harpoon.mark").add_file)
 keymap.set("n", "<leader>hh", require("harpoon.ui").toggle_quick_menu)
