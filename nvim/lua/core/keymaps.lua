@@ -64,6 +64,7 @@ keymap.set('n', '<leader>fo', require('telescope.builtin').lsp_document_symbols,
 keymap.set('n', '<leader>fi', require('telescope.builtin').lsp_incoming_calls, {})
 keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, {})
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({ default_text = ":method:" }) end)
+keymap.set("n", "<leader>i", ':lua vim.diagnostic.open_float(nil, {focus=true, scope="cursor"})<CR>')
 
 -- Git-blame
 keymap.set("n", "<leader>gb", ":GitBlameToggle<CR>") -- toggle git blame
@@ -151,7 +152,7 @@ keymap.set("n", "<leader>rh", function() require('nvim-python-repl').toggle_vert
 keymap.set("n", "<leader>rw", function() require('nvim-python-repl').open_repl() end,
   { desc = "Opens the REPL in a window split" })
 
--- NeoGit
+-- GIT
 keymap.set("n", "<leader>ng", require("neogit").open)
 keymap.set('n', ']c',
   function() if vim.wo.diff then vim.cmd.normal({ ']c', bang = true }) else require("gitsigns").nav_hunk('next') end end)
