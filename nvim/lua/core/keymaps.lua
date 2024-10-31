@@ -153,3 +153,20 @@ keymap.set("n", "<leader>rw", function() require('nvim-python-repl').open_repl()
 
 -- NeoGit
 keymap.set("n", "<leader>ng", require("neogit").open)
+keymap.set('n', ']c',
+  function() if vim.wo.diff then vim.cmd.normal({ ']c', bang = true }) else require("gitsigns").nav_hunk('next') end end)
+keymap.set('n', '[c',
+  function() if vim.wo.diff then vim.cmd.normal({ '[c', bang = true }) else require("gitsigns").nav_hunk('prev') end end)
+keymap.set('n', '<leader>hs', require("gitsigns").stage_hunk)
+keymap.set('n', '<leader>hr', require("gitsigns").reset_hunk)
+keymap.set('v', '<leader>hs', function() require("gitsigns").stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
+keymap.set('v', '<leader>hr', function() require("gitsigns").reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
+keymap.set('n', '<leader>hS', require("gitsigns").stage_buffer)
+keymap.set('n', '<leader>hu', require("gitsigns").undo_stage_hunk)
+keymap.set('n', '<leader>hR', require("gitsigns").reset_buffer)
+keymap.set('n', '<leader>hp', require("gitsigns").preview_hunk)
+keymap.set('n', '<leader>hb', function() require("gitsigns").blame_line { full = true } end)
+keymap.set('n', '<leader>tb', require("gitsigns").toggle_current_line_blame)
+keymap.set('n', '<leader>hd', require("gitsigns").diffthis)
+keymap.set('n', '<leader>hD', function() require("gitsigns").diffthis('~') end)
+keymap.set('n', '<leader>td', require("gitsigns").toggle_deleted)
