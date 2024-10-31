@@ -30,6 +30,19 @@ keymap.set('n', '>', '>>', { noremap = true, silent = true })
 keymap.set('n', '<', '<<', { noremap = true, silent = true })
 
 
+-- Tab management
+keymap.set("n", "<leader>to", ":tabnew<CR>")   -- open a new tab
+keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close a tab
+keymap.set("n", "<leader>tn", ":tabn<CR>")     -- next tab
+keymap.set("n", "<leader>tp", ":tabp<CR>")     -- previous tab
+
+-- Diff keymaps
+keymap.set("n", "<leader>cc", ":diffput<CR>")   -- put diff from current to other during diff
+keymap.set("n", "<leader>cj", ":diffget 1<CR>") -- get diff from left (local) during merge
+keymap.set("n", "<leader>ck", ":diffget 3<CR>") -- get diff from right (remote) during merge
+keymap.set("n", "<leader>cn", "]c")             -- next diff hunk
+keymap.set("n", "<leader>cp", "[c")             -- previous diff hunk
+
 -- Quickfix keymaps
 keymap.set("n", "<leader>qo", ":copen<CR>")  -- open quickfix list
 keymap.set("n", "<leader>qf", ":cfirst<CR>") -- jump to first quickfix list item
@@ -52,6 +65,9 @@ keymap.set('n', '<leader>fi', require('telescope.builtin').lsp_incoming_calls, {
 keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, {})
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({ default_text = ":method:" }) end)
 keymap.set("n", "<leader>i", ':lua vim.diagnostic.open_float(nil, {focus=true, scope="cursor"})<CR>')
+
+-- Git-blame
+keymap.set("n", "<leader>gb", ":GitBlameToggle<CR>") -- toggle git blame
 
 -- Harpoon
 keymap.set("n", "<leader>ha", require("harpoon.mark").add_file)
