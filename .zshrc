@@ -19,6 +19,14 @@ plugins=(git python direnv)
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
+function activate_venv_if_exists() {
+  if [ -d ".venv" ] && [ -f ".venv/bin/activate" ]; then
+    source .venv/bin/activate
+    echo "Virtual environment activated."
+  else
+    echo "No virtual environment found in the current directory."
+  fi
+}
 
 # Yazi:
 function y() {
@@ -39,6 +47,9 @@ alias l="eza -l --icons --git -a"
 alias ls="eza -l --icons --git -a"
 alias lt="eza --tree --level=2 --long --icons --git"
 alias ltree="eza --tree --level=2  --icons --git"
+
+# Bind Ctrl+V to the function
+bindkey -s '^V' 'activate_venv_if_exists\n'
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
