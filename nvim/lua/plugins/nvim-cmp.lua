@@ -27,8 +27,22 @@ return {
   config = function()
     local cmp = require('cmp')
     local luasnip = require('luasnip')
+
+    local mapping = {
+      ['<C-j>'] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
+      ['<C-k>'] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
+      ['<C-h>'] = { c = cmp.mapping.abort() },
+      ['<C-l>'] = {
+        c = cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
+        },
+      }
+    }
+
     require('luasnip.loaders.from_vscode').lazy_load()
-    luasnip.config.setup({})
+    luasnip.config.setup({
+    })
 
     cmp.setup({
       snippet = {
@@ -39,17 +53,17 @@ return {
       completion = {
         completeopt = 'menu,menuone,noinsert',
       },
+
       mapping = cmp.mapping.preset.insert {
         ['<C-j>'] = cmp.mapping.select_next_item(), -- next suggestion
         ['<C-k>'] = cmp.mapping.select_prev_item(), -- previous suggestion
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),    -- scroll backward
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),     -- scroll forward
         ['<C-Space>'] = cmp.mapping.complete {},    -- show completion suggestions
         ['<C-h>'] = cmp.mapping.abort(),
         ['<C-l>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         },
+
         -- Tab through suggestions or when a snippet is active, tab to the next argument
         ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -60,7 +74,7 @@ return {
             fallback()
           end
         end, { 'i', 's' }),
-        -- Tab backwards through suggestions or when a snippet is active, tab to the next argument
+
         ['<S-Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
@@ -70,7 +84,18 @@ return {
             fallback()
           end
         end, { 'i', 's' }),
-        ['<C-s>'] = cmp.mapping(function(fallback)
+
+        ['<M-j>'] = cmp.mapping(function()
+          cmp.complete({
+            config = {
+              sources = {
+                { name = 'nvim_lsp' }
+              }
+            }
+          })
+        end, { 'i', 's' }),
+
+        ['<M-k>'] = cmp.mapping(function()
           cmp.complete({
             config = {
               sources = {
@@ -79,38 +104,43 @@ return {
             }
           })
         end, { 'i', 's' }),
+
+        ['<M-l>'] = cmp.mapping(function()
+          cmp.complete({
+            config = {
+              sources = {
+                { name = "buffer" }, -- text within current buffer
+                { name = "path" }, -- file system paths
+              }
+            }
+          })
+        end, { 'i', 's' }),
       },
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" }, -- lsp
-        { name = "luasnip" },  -- snippets
-        { name = "buffer" },   -- text within current buffer
-        { name = "path" },     -- file system paths
-      }),
+
+      -- sources = cmp.config.sources({
+      --   { name = "nvim_lsp" }, -- lsp
+      --   -- { name = "luasnip" },  -- snippets
+      --   -- { name = "buffer" },   -- text within current buffer
+      --   -- { name = "path" },     -- file system paths
+      -- }),
+
       window = {
         -- Add borders to completions popups
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
     })
+
     -- `/` cmdline setup.
     cmp.setup.cmdline('/', {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = mapping,
       sources = {
         { name = 'buffer' }
       }
     })
-    cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline({
-        ['<C-j>'] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
-        ['<C-k>'] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
 
-        ['<C-l>'] = {
-          c = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          },
-        }
-      }),
+    cmp.setup.cmdline(':', {
+      mapping = mapping,
       sources = cmp.config.sources({
         { name = 'path' }
       }, {

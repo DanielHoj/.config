@@ -155,3 +155,11 @@ keymap.set('n', '<leader>tb', require("gitsigns").toggle_current_line_blame)
 keymap.set('n', '<leader>hd', require("gitsigns").diffthis)
 keymap.set('n', '<leader>hD', function() require("gitsigns").diffthis('~') end)
 keymap.set('n', '<leader>td', require("gitsigns").toggle_deleted)
+
+-- CMP select mode fix
+vim.keymap.set("s", "c", function()
+  vim.api.nvim_feedkeys("c", "n", false)
+end, { silent = true, remap = false, desc = "Don't paste in select mode" })
+vim.keymap.set("s", "p", function()
+  vim.api.nvim_feedkeys("p", "n", false)
+end, { silent = true, remap = false, desc = "Don't paste in select mode" })
