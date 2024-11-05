@@ -23,6 +23,8 @@ return {
     'hrsh7th/cmp-path',
     -- https://github.com/hrsh7th/cmp-cmdline
     'hrsh7th/cmp-cmdline',
+    -- https://github.com/lukas-reineke/cmp-under-comparator
+    'lukas-reineke/cmp-under-comparator',
   },
   config = function()
     local cmp = require('cmp')
@@ -49,6 +51,19 @@ return {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
+      },
+      sorting = {
+        priority_weight = 1,
+        comparators = {
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          require("cmp-under-comparator").under,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
       completion = {
         completeopt = 'menu,menuone,noinsert',
@@ -85,17 +100,7 @@ return {
           end
         end, { 'i', 's' }),
 
-        ['<M-j>'] = cmp.mapping(function()
-          cmp.complete({
-            config = {
-              sources = {
-                { name = 'nvim_lsp' }
-              }
-            }
-          })
-        end, { 'i', 's' }),
-
-        ['<M-k>'] = cmp.mapping(function()
+        ['<C-S>'] = cmp.mapping(function()
           cmp.complete({
             config = {
               sources = {
@@ -105,24 +110,14 @@ return {
           })
         end, { 'i', 's' }),
 
-        ['<M-l>'] = cmp.mapping(function()
-          cmp.complete({
-            config = {
-              sources = {
-                { name = "buffer" }, -- text within current buffer
-                { name = "path" }, -- file system paths
-              }
-            }
-          })
-        end, { 'i', 's' }),
       },
 
-      -- sources = cmp.config.sources({
-      --   { name = "nvim_lsp" }, -- lsp
-      --   -- { name = "luasnip" },  -- snippets
-      --   -- { name = "buffer" },   -- text within current buffer
-      --   -- { name = "path" },     -- file system paths
-      -- }),
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" }, -- lsp
+        { name = "luasnip" },  -- snippets
+        -- { name = "buffer" },   -- text within current buffer
+        -- { name = "path" },     -- file system paths
+      }),
 
       window = {
         -- Add borders to completions popups
