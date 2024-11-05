@@ -30,7 +30,7 @@ return {
         'quick_lint_js',
         'ruff',
         -- 'ruff_lsp',
-        'pyright'
+        'basedpyright'
         -- 'jsonls', -- requires npm to be installed
         -- 'bashls', -- requires npm to be installed
         -- 'cssls', -- requires npm to be installed
@@ -69,8 +69,14 @@ return {
     }
 
     lspconfig.ruff.setup {}
-    lspconfig.pyright.setup {}
-    -- lspconfig.ruff_lsp.setup {}
+    lspconfig.basedpyright.setup {
+      capabilities = lsp_capabilities,
+      settings = {
+        basedpyright = {
+          typeCheckingMode = "basic",
+        },
+      },
+    }
   end
 
 }
