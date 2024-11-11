@@ -1,4 +1,5 @@
 -- Fuzzy finder
+local actions = require("telescope.actions")
 return {
   -- https://github.com/nvim-telescope/telescope.nvim
   'nvim-telescope/telescope.nvim',
@@ -32,14 +33,16 @@ return {
             reverse_directories = true
           }
         },
+        mappings = {
+          ["i"] =
+          {
+            ["<C-j>"] = actions.move_selection_next,
+            ["<C-k>"] = actions.move_selection_previous,
+          }
+        },
       },
       extensions = {
         undo = {
-        },
-      },
-      pickers = {
-        find_files = {
-          theme = "dropdown",
         },
       },
     })

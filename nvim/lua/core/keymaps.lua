@@ -43,14 +43,19 @@ keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximize tab
 
 -- Telescope
-keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {})
-keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, {})
-keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, {})
-keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, {})
-keymap.set('n', '<leader>fs', require('telescope.builtin').current_buffer_fuzzy_find, {})
-keymap.set('n', '<leader>fo', require('telescope.builtin').lsp_document_symbols, {})
-keymap.set('n', '<leader>fi', require('telescope.builtin').lsp_incoming_calls, {})
-keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, {})
+-- add dropdown theme for all pickers
+local CallTelescope = function(input)
+    local theme = require('telescope.themes').get_dropdown({})
+    input(theme)
+end
+keymap.set('n', '<leader>ff', function() CallTelescope(require('telescope.builtin').find_files) end, {})
+keymap.set('n', '<leader>fg', function() CallTelescope(require('telescope.builtin').live_grep) end, {})
+keymap.set('n', '<leader>fb', function() CallTelescope(require('telescope.builtin').buffers) end, {})
+keymap.set('n', '<leader>fh', function() CallTelescope(require('telescope.builtin').help_tags) end, {})
+keymap.set('n', '<leader>fs', function() CallTelescope(require('telescope.builtin').current_buffer_fuzzy_find) end, {})
+keymap.set('n', '<leader>fo', function() CallTelescope(require('telescope.builtin').lsp_document_symbols) end, {})
+keymap.set('n', '<leader>fi', function() CallTelescope(require('telescope.builtin').lsp_incoming_calls) end, {})
+keymap.set('n', '<leader>fd', function() CallTelescope(require('telescope.builtin').diagnostics) end, {})
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({ default_text = ":method:" }) end)
 keymap.set("n", "<leader>i", ':lua vim.diagnostic.open_float(nil, {focus=true, scope="cursor"})<CR>')
 
@@ -138,9 +143,9 @@ keymap.set("n", "<leader>rw", function() require('nvim-python-repl').open_repl()
 
 -- GIT
 keymap.set("n", "<leader>ng", require("neogit").open)
-keymap.set('n', ']c',
+keymap.set('n', '<leader>hn',
   function() if vim.wo.diff then vim.cmd.normal({ ']c', bang = true }) else require("gitsigns").nav_hunk('next') end end)
-keymap.set('n', '[c',
+keymap.set('n', '<leader>hp',
   function() if vim.wo.diff then vim.cmd.normal({ '[c', bang = true }) else require("gitsigns").nav_hunk('prev') end end)
 keymap.set('n', '<leader>hs', require("gitsigns").stage_hunk)
 keymap.set('n', '<leader>hr', require("gitsigns").reset_hunk)
