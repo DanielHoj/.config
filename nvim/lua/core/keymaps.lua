@@ -13,15 +13,15 @@ keymap.set("v", "P", '"_dP', { noremap = true, silent = true })             -- k
 keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true }) -- exit terminal with esc
 
 
--- Split window management
-keymap.set("n", "<leader>sv", "<C-w>v")     -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s")     -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=")     -- make split windows equal width
-keymap.set("n", "<leader>sc", ":close<CR>") -- close split window
-keymap.set("n", "<leader>sj", "<C-w>-")     -- make split window height shorter
-keymap.set("n", "<leader>sk", "<C-w>+")     -- make split windows height taller
-keymap.set("n", "<leader>sl", "<C-w>>5")    -- make split windows width bigger
-keymap.set("n", "<leader>sh", "<C-w><5")    -- make split windows width smaller
+-- Splits
+keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
+keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
+keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
+keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 
 -- Indent stuff
 keymap.set('v', '<', '<gv', { noremap = true, silent = true })
@@ -39,6 +39,7 @@ keymap.set("n", "<leader>ql", ":clast<CR>")  -- jump to last quickfix list item
 keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 
 -- Vim-maximizer
+--
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximize tab
 
 -- Telescope
@@ -74,8 +75,8 @@ keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
 keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 keymap.set('n', '<leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
 keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+keymap.set('n', '<leader>gr', '<CMD>Glance references<CR>')
 keymap.set('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>')
 keymap.set('n', '<leader>gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 keymap.set('n', '<leader>rr', '<cmd>lua vim.lsp.buf.rename()<CR>')
 keymap.set('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
@@ -118,8 +119,7 @@ keymap.set("n", '<leader>dh', '<cmd>Telescope dap commands<cr>')
 keymap.set("n", '<leader>de', function() require('telescope.builtin').diagnostics({ default_text = ":E:" }) end)
 
 -- Yazi
-keymap.set("n", "<leader>yy", "<cmd>Yazi<cr>")
-keymap.set("n", "<leader>ycw", "<cmd>Yazi cwd<cr>")
+keymap.set("n", "<leader>y", "<cmd>Yazi<cr>")
 
 
 -- REPL
@@ -163,3 +163,14 @@ end, { silent = true, remap = false, desc = "Don't paste in select mode" })
 vim.keymap.set("s", "p", function()
   vim.api.nvim_feedkeys("p", "n", false)
 end, { silent = true, remap = false, desc = "Don't paste in select mode" })
+
+vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
+  { silent = true, desc = "Initialize the plugin" })
+vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>",
+  { silent = true, desc = "run operator selection" })
+vim.keymap.set("n", "<leader>rl", ":MoltenEvaluateLine<CR>",
+  { silent = true, desc = "evaluate line" })
+vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
+  { silent = true, desc = "re-evaluate cell" })
+vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
+  { silent = true, desc = "evaluate visual selection" })
