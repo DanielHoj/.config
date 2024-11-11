@@ -8,8 +8,6 @@ return {
     'mfussenegger/nvim-dap',
     -- https://github.com/nvim-neotest/nvim-nio
     'nvim-neotest/nvim-nio',
-    -- https://github.com/theHamsta/nvim-dap-virtual-text
-    -- 'theHamsta/nvim-dap-virtual-text',   -- inline variable text while debugging
     -- https://github.com/nvim-telescope/telescope-dap.nvim
     'nvim-telescope/telescope-dap.nvim', -- telescope integration with dap
   },
@@ -90,7 +88,7 @@ return {
 
     dap.adapters.python = {
       type = 'executable',
-      command = os.getenv('HOME') .. '/.virtualenvs/tools/bin/python',
+      command = os.getenv('HOME') .. '/.virtualenvs/neovim/.venv/bin/python',
       args = { '-m', 'debugpy.adapter' },
     }
 

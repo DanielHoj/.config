@@ -83,3 +83,4 @@ opt.foldlevel = 20
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
 
+vim.g.python3_host_prog=vim.fn.expand("~/.virtualenvs/neovim/.venv/bin/python")
