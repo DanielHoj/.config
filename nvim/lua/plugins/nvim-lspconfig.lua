@@ -15,9 +15,6 @@ return {
     -- https://github.com/j-hui/fidget.nvim
     { 'j-hui/fidget.nvim',                opts = {} },
 
-    -- Additional lua configuration, makes nvim stuff amazing!
-    -- https://github.com/folke/neodev.nvim
-    { 'folke/neodev.nvim',                opts = {} },
   },
   config = function()
     require('mason').setup()
@@ -25,18 +22,11 @@ return {
       -- Install these LSPs automatically
       ensure_installed = {
         'lua_ls',
+        'ruff',
+        'basedpyright',
         'lemminx',
         'marksman',
         'quick_lint_js',
-        'ruff',
-        -- 'ruff_lsp',
-        'basedpyright'
-        -- 'jsonls', -- requires npm to be installed
-        -- 'bashls', -- requires npm to be installed
-        -- 'cssls', -- requires npm to be installed
-        -- 'html', -- requires npm to be installed
-        -- 'tsserver', -- requires npm to be installed
-        -- 'yamlls', -- requires npm to be installed
       }
     })
 
@@ -59,11 +49,24 @@ return {
     -- Lua LSP settings
     lspconfig.lua_ls.setup {
       settings = {
+        capabilities = lsp_capabilities,
         Lua = {
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = { 'vim' },
+          runtime = {
+            version = "LuaJIT",
           },
+          diagnostics = {
+            globals = { "vim" },
+          },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+              [vim.fn.stdpath("config") .. "/lua"] = true,
+            },
+            maxPreload = 100000,
+            preLoadFileSize = 10000,
+          },
+          telemetry = { enable = false },
         },
       },
     }
