@@ -49,7 +49,8 @@ alias lt="eza --tree --level=2 --long --icons --git"
 alias ltree="eza --tree --level=2  --icons --git"
 
 # Bind Ctrl+V to the function
-bindkey -s '^V' 'activate_venv_if_exists\n'
+alias v=activate_venv_if_exists
+# bindkey -s '^V' 'activate_venv_if_exists\n'
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
