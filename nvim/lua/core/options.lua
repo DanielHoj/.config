@@ -27,9 +27,6 @@ vim.o.completeopt = 'menuone,noselect'
 
 local opt = vim.opt
 
---vim.cmd()
-opt.clipboard = 'unnamedplus'
-
 -- Session Management
 opt.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
@@ -65,8 +62,6 @@ vim.diagnostic.config {
 -- Backspace
 opt.backspace = "indent,eol,start"
 
--- Clipboard
-opt.clipboard:append("unnamedplus")
 
 -- Split Windows
 opt.splitright = true
@@ -84,3 +79,26 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
 
 vim.g.python3_host_prog=vim.fn.expand("~/.virtualenvs/neovim/.venv/bin/python")
+
+-- Lazyload clipboard for faster startup in wsl
+-- Disable automatic loading of clipboard provider
+vim.g.loaded_clipboard_provider = 1
+
+
+function _G.load_clipboard_provider()
+  if vim.g.loaded_clipboard_provider == 1 then
+    vim.g.loaded_clipboard_provider = nil
+    vim.cmd('runtime autoload/provider/clipboard.vim')
+    vim.opt.clipboard = 'unnamedplus'
+  end
+end
+
+
+vim.cmd([[
+  augroup LazyLoadClipboard
+    autocmd!
+    autocmd TextYankPost * lua _G.load_clipboard_provider()
+    autocmd CmdlineEnter * lua _G.load_clipboard_provider()
+  augroup END
+]])
+
