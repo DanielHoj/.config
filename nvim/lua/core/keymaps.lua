@@ -179,3 +179,9 @@ vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
   { silent = true, desc = "re-evaluate cell" })
 vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
   { silent = true, desc = "evaluate visual selection" })
+keymap.set("n", "<leader>mr", ":MoltenEvaluateLine<CR>",
+  { silent = true, desc = "evaluate line" })
+keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>",
+    { silent = true, desc = "hide output" })
+keymap.set("n", "<leader>ms", ":noautocmd MoltenEnterOutput<CR>",
+    { silent = true, desc = "show/enter output" })
