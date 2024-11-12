@@ -161,23 +161,9 @@ keymap.set('n', '<leader>hd', require("gitsigns").diffthis)
 keymap.set('n', '<leader>hD', function() require("gitsigns").diffthis('~') end)
 keymap.set('n', '<leader>td', require("gitsigns").toggle_deleted)
 
--- CMP select mode fix
-vim.keymap.set("s", "c", function()
-  vim.api.nvim_feedkeys("c", "n", false)
-end, { silent = true, remap = false, desc = "Don't paste in select mode" })
-vim.keymap.set("s", "p", function()
-  vim.api.nvim_feedkeys("p", "n", false)
-end, { silent = true, remap = false, desc = "Don't paste in select mode" })
-
-vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
+keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
   { silent = true, desc = "Initialize the plugin" })
-vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>",
-  { silent = true, desc = "run operator selection" })
-vim.keymap.set("n", "<leader>rl", ":MoltenEvaluateLine<CR>",
-  { silent = true, desc = "evaluate line" })
-vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
-  { silent = true, desc = "re-evaluate cell" })
-vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
+keymap.set("v", "<leader>mr", ":<C-u>MoltenEvaluateVisual<CR>gv",
   { silent = true, desc = "evaluate visual selection" })
 keymap.set("n", "<leader>mr", ":MoltenEvaluateLine<CR>",
   { silent = true, desc = "evaluate line" })
