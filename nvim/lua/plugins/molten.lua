@@ -3,6 +3,7 @@ return {
     "benlubas/molten-nvim",
     version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
     dependencies = "3rd/image.nvim",
+    lazy = true,
     build = ":UpdateRemotePlugins",
     init = function()
       -- these are examples, not defaults. Please see the readme
@@ -13,8 +14,9 @@ return {
   },
   {
     "3rd/image.nvim",
+    lazy = true,
     opts = {
-      backend = "ueberzug",
+      backend = "kitty",
       max_width = 100,
       max_height = 12,
       max_height_window_percentage = math.huge,
@@ -24,5 +26,5 @@ return {
     },
     config = function ()
       require("image").setup()
-    end
+    end,
   } }
