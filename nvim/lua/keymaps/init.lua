@@ -1,0 +1,10 @@
+require("keymaps.general")
+require("keymaps.git")
+require("keymaps.telescope")
+require("keymaps.debuggin")
+require("keymaps.python")
+require("keymaps.harpoon")
+require("keymaps.refactor")
+require("keymaps.lsp")
+require("keymaps.completion")
+
