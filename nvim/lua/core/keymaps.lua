@@ -1,16 +1,17 @@
 local keymap = vim.keymap
 
 -- General keymaps
-keymap.set("n", "<leader>wq", ":wq<CR>")                                    -- save and quit
-keymap.set("n", "<leader>qq", ":q!<CR>")                                    -- quit without saving
-keymap.set("n", "<leader>ww", ":w<CR>")                                     -- save
-keymap.set("n", "gx", ":!open <c-r><c-a><CR>")                              -- open URL under cursor
-keymap.set("i", "jj", "<Esc>", { noremap = false })                         -- exit insert mode with jj
-keymap.set("n", "<space><space>", "<cmd>set nohlsearch<CR>")                -- remove highligh
-keymap.set("n", "<leader><CR>", "o<Esc>", { noremap = false })              -- new line with leader enter
-keymap.set("v", "p", '"_dP', { noremap = true, silent = true })             -- keep yanked reg when pasted in visual
-keymap.set("v", "P", '"_dP', { noremap = true, silent = true })             -- keep yanked reg when pasted in visual
-keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true }) -- exit terminal with esc
+keymap.set("n", "<leader>wq", ":wq<CR>")
+keymap.set("n", "<leader>qq", ":q!<CR>")
+keymap.set("n", "<leader>ww", ":w<CR>")
+keymap.set("n", "gx", ":!open <c-r><c-a><CR>")
+keymap.set("i", "jj", "<Esc>")
+keymap.set("n", "<space><space>", "<cmd>set nohlsearch<CR>")
+keymap.set("n", "<leader><CR>", "o<Esc>")
+keymap.set("v", "p", '"_dP')
+keymap.set("v", "P", '"_dP')
+keymap.set('t', '<Esc>', [[<C-\><C-n>]])
+keymap.set("n", "<A-a>", "ggVG")
 
 
 -- Splits
@@ -24,10 +25,10 @@ keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
 keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 
 -- Indent stuff
-keymap.set('v', '<', '<gv', { noremap = true, silent = true })
-keymap.set('v', '>', '>gv', { noremap = true, silent = true })
-keymap.set('n', '>', '>>', { noremap = true, silent = true })
-keymap.set('n', '<', '<<', { noremap = true, silent = true })
+keymap.set('v', '<', '<gv')
+keymap.set('v', '>', '>gv')
+keymap.set('n', '>', '>>')
+keymap.set('n', '<', '<<')
 
 
 -- Quickfix keymaps
@@ -44,16 +45,16 @@ local CallTelescope = function(input)
   local theme = require('telescope.themes').get_dropdown({})
   input(theme)
 end
-keymap.set('n', '<leader>ff', function() CallTelescope(require('telescope.builtin').find_files) end, {})
-keymap.set('n', '<leader>fg', function() CallTelescope(require('telescope.builtin').live_grep) end, {})
-keymap.set('n', '<leader>fb', function() CallTelescope(require('telescope.builtin').buffers) end, {})
-keymap.set('n', '<leader>fh', function() CallTelescope(require('telescope.builtin').help_tags) end, {})
-keymap.set('n', '<leader>fs', function() CallTelescope(require('telescope.builtin').current_buffer_fuzzy_find) end, {})
-keymap.set('n', '<leader>fo', function() CallTelescope(require('telescope.builtin').lsp_document_symbols) end, {})
-keymap.set('n', '<leader>fi', function() CallTelescope(require('telescope.builtin').lsp_incoming_calls) end, {})
-keymap.set('n', '<leader>fd', function() CallTelescope(require('telescope.builtin').diagnostics) end, {})
+keymap.set('n', '<leader>ff', function() CallTelescope(require('telescope.builtin').find_files) end)
+keymap.set('n', '<leader>fg', function() CallTelescope(require('telescope.builtin').live_grep) end)
+keymap.set('n', '<leader>fb', function() CallTelescope(require('telescope.builtin').buffers) end)
+keymap.set('n', '<leader>fh', function() CallTelescope(require('telescope.builtin').help_tags) end)
+keymap.set('n', '<leader>fs', function() CallTelescope(require('telescope.builtin').current_buffer_fuzzy_find) end)
+keymap.set('n', '<leader>fo', function() CallTelescope(require('telescope.builtin').lsp_document_symbols) end)
+keymap.set('n', '<leader>fi', function() CallTelescope(require('telescope.builtin').lsp_incoming_calls) end)
+keymap.set('n', '<leader>fd', function() CallTelescope(require('telescope.builtin').diagnostics) end)
 keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({ default_text = ":method:" }) end)
-keymap.set("n", "<leader>i", ':lua vim.diagnostic.open_float(nil, {focus=true, scope="cursor"})<CR>')
+keymap.set("n", "<leader>i", ':lua vim.diagnostic.open_float(nil)<CR>')
 
 -- Harpoon
 keymap.set("n", "<leader>ha", require("harpoon.mark").add_file)
@@ -67,9 +68,6 @@ keymap.set("n", "<leader>6", function() require("harpoon.ui").nav_file(6) end)
 keymap.set("n", "<leader>7", function() require("harpoon.ui").nav_file(7) end)
 keymap.set("n", "<leader>8", function() require("harpoon.ui").nav_file(8) end)
 keymap.set("n", "<leader>9", function() require("harpoon.ui").nav_file(9) end)
-
--- Vim REST Console
--- keymap.set("n", "<leader>xr", ":call VrcQuery()<CR>") -- Run REST query
 
 -- LSP
 keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -141,16 +139,11 @@ keymap.set('n', '<leader>nc', ":DiffviewClose<CR>")
 keymap.set('n', '<leader>ntd', require("gitsigns").toggle_deleted)
 
 -- Jupyter notebook, with molten.nvim
-keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
-  { silent = true, desc = "Initialize the plugin" })
-keymap.set("v", "<leader>mr", ":<C-u>MoltenEvaluateVisual<CR>gv",
-  { silent = true, desc = "evaluate visual selection" })
-keymap.set("n", "<leader>mr", ":MoltenEvaluateLine<CR>",
-  { silent = true, desc = "evaluate line" })
-keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>",
-  { silent = true, desc = "hide output" })
-keymap.set("n", "<leader>ms", ":noautocmd MoltenEnterOutput<CR>",
-  { silent = true, desc = "show/enter output" })
+keymap.set("n", "<leader>mi", ":MoltenInit<CR>")
+keymap.set("v", "<leader>mr", ":<C-u>MoltenEvaluateVisual<CR>gv")
+keymap.set("n", "<leader>mr", ":MoltenEvaluateLine<CR>")
+keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>")
+keymap.set("n", "<leader>ms", ":noautocmd MoltenEnterOutput<CR>")
 
 -- REPL
 keymap.set("n", "<leader>cr", function() require('nvim-python-repl').send_statement_definition() end)
