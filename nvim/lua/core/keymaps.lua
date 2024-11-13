@@ -143,24 +143,23 @@ keymap.set("n", "<leader>rw", function() require('nvim-python-repl').open_repl()
 
 -- GIT
 keymap.set("n", "<leader>ng", require("neogit").open)
-keymap.set('n', '<leader>hn',
+keymap.set('n', '<leader>nn',
   function() if vim.wo.diff then vim.cmd.normal({ ']c', bang = true }) else require("gitsigns").nav_hunk('next') end end)
-keymap.set('n', '<leader>hp',
+keymap.set('n', '<leader>np',
   function() if vim.wo.diff then vim.cmd.normal({ '[c', bang = true }) else require("gitsigns").nav_hunk('prev') end end)
-keymap.set('n', '<leader>hs', require("gitsigns").stage_hunk)
-keymap.set('n', '<leader>hr', require("gitsigns").reset_hunk)
-keymap.set('v', '<leader>hs', function() require("gitsigns").stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-keymap.set('v', '<leader>hr', function() require("gitsigns").reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-keymap.set('n', '<leader>hS', require("gitsigns").stage_buffer)
-keymap.set('n', '<leader>hu', require("gitsigns").undo_stage_hunk)
-keymap.set('n', '<leader>hR', require("gitsigns").reset_buffer)
-keymap.set('n', '<leader>hp', require("gitsigns").preview_hunk)
-keymap.set('n', '<leader>hb', function() require("gitsigns").blame_line { full = true } end)
-keymap.set('n', '<leader>tb', require("gitsigns").toggle_current_line_blame)
-keymap.set('n', '<leader>hd', require("gitsigns").diffthis)
-keymap.set('n', '<leader>hD', function() require("gitsigns").diffthis('~') end)
-keymap.set('n', '<leader>td', require("gitsigns").toggle_deleted)
+keymap.set('n', '<leader>ns', require("gitsigns").stage_hunk)
+keymap.set('n', '<leader>nr', require("gitsigns").reset_hunk)
+keymap.set('n', '<leader>nS', require("gitsigns").stage_buffer)
+keymap.set('n', '<leader>nu', require("gitsigns").undo_stage_hunk)
+keymap.set('n', '<leader>nR', require("gitsigns").reset_buffer)
+keymap.set('n', '<leader>np', require("gitsigns").preview_hunk)
+keymap.set('n', '<leader>nb', function() require("gitsigns").blame_line { full = true } end)
+keymap.set('n', '<leader>ntb', require("gitsigns").toggle_current_line_blame)
+keymap.set('n', '<leader>nd', ":DiffviewOpen<CR>")
+keymap.set('n', '<leader>nc', ":DiffviewClose<CR>")
+keymap.set('n', '<leader>ntd', require("gitsigns").toggle_deleted)
 
+-- Jupyter notebook, with molten.nvim
 keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
   { silent = true, desc = "Initialize the plugin" })
 keymap.set("v", "<leader>mr", ":<C-u>MoltenEvaluateVisual<CR>gv",
