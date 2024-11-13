@@ -38,15 +38,11 @@ keymap.set("n", "<leader>qp", ":cprev<CR>")  -- jump to prev quickfix list item
 keymap.set("n", "<leader>ql", ":clast<CR>")  -- jump to last quickfix list item
 keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 
--- Vim-maximizer
---
-keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximize tab
-
 -- Telescope
 -- add dropdown theme for all pickers
 local CallTelescope = function(input)
-    local theme = require('telescope.themes').get_dropdown({})
-    input(theme)
+  local theme = require('telescope.themes').get_dropdown({})
+  input(theme)
 end
 keymap.set('n', '<leader>ff', function() CallTelescope(require('telescope.builtin').find_files) end, {})
 keymap.set('n', '<leader>fg', function() CallTelescope(require('telescope.builtin').live_grep) end, {})
@@ -126,21 +122,6 @@ keymap.set("n", '<leader>de', function() require('telescope.builtin').diagnostic
 -- Yazi
 keymap.set("n", "<leader>y", "<cmd>Yazi<cr>")
 
-
--- REPL
-keymap.set("n", "<leader>rr", function() require('nvim-python-repl').send_statement_definition() end,
-  { desc = "Send semantic unit to REPL" })
-keymap.set("v", "<leader>rr", function() require('nvim-python-repl').send_visual_to_repl() end,
-  { desc = "Send visual selection to REPL" })
-keymap.set("n", "<leader>rb", function() require('nvim-python-repl').send_buffer_to_repl() end,
-  { desc = "Send entire buffer to REPL" })
-keymap.set("n", "<leader>rt", function() require('nvim-python-repl').toggle_execute() end,
-  { desc = "Automatically execute command in REPL after sent" })
-keymap.set("n", "<leader>rh", function() require('nvim-python-repl').toggle_vertical() end,
-  { desc = "Create REPL in vertical or horizontal split" })
-keymap.set("n", "<leader>rw", function() require('nvim-python-repl').open_repl() end,
-  { desc = "Opens the REPL in a window split" })
-
 -- GIT
 keymap.set("n", "<leader>ng", require("neogit").open)
 keymap.set('n', '<leader>nn',
@@ -167,6 +148,23 @@ keymap.set("v", "<leader>mr", ":<C-u>MoltenEvaluateVisual<CR>gv",
 keymap.set("n", "<leader>mr", ":MoltenEvaluateLine<CR>",
   { silent = true, desc = "evaluate line" })
 keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>",
-    { silent = true, desc = "hide output" })
+  { silent = true, desc = "hide output" })
 keymap.set("n", "<leader>ms", ":noautocmd MoltenEnterOutput<CR>",
-    { silent = true, desc = "show/enter output" })
+  { silent = true, desc = "show/enter output" })
+
+-- REPL
+keymap.set("n", "<leader>cr", function() require('nvim-python-repl').send_statement_definition() end)
+keymap.set("v", "<leader>cr", function() require('nvim-python-repl').send_visual_to_repl() end)
+keymap.set("n", "<leader>cb", function() require('nvim-python-repl').send_buffer_to_repl() end)
+keymap.set("n", "<leader>ct", function() require('nvim-python-repl').toggle_execute() end)
+keymap.set("n", "<leader>ch", function() require('nvim-python-repl').toggle_vertical() end)
+keymap.set("n", "<leader>cw", function() require('nvim-python-repl').open_repl() end)
+
+-- Refactoring
+keymap.set("x", "<leader>re", function() require('refactoring').refactor('Extract Function') end)
+keymap.set("x", "<leader>rf", function() require('refactoring').refactor('Extract Function To File') end)
+keymap.set("x", "<leader>rv", function() require('refactoring').refactor('Extract Variable') end)
+keymap.set("n", "<leader>rI", function() require('refactoring').refactor('Inline Function') end)
+keymap.set({ "n", "x" }, "<leader>ri", function() require('refactoring').refactor('Inline Variable') end)
+keymap.set("n", "<leader>rb", function() require('refactoring').refactor('Extract Block') end)
+keymap.set("n", "<leader>rbf", function() require('refactoring').refactor('Extract Block To File') end)
