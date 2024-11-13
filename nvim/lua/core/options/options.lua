@@ -79,37 +79,3 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
 
 vim.g.python3_host_prog=vim.fn.expand("~/.virtualenvs/neovim/.venv/bin/python")
-
--- Lazyload clipboard for faster startup in wsl
--- Disable automatic loading of clipboard provider
-vim.g.loaded_clipboard_provider = 1
-
-
-function _G.load_clipboard_provider()
-  if vim.g.loaded_clipboard_provider == 1 then
-    vim.g.loaded_clipboard_provider = nil
-    vim.cmd('runtime autoload/provider/clipboard.vim')
-    vim.opt.clipboard = 'unnamedplus'
-  end
-end
-
-
-vim.cmd([[
-  augroup LazyLoadClipboard
-    autocmd!
-    autocmd TextYankPost * lua _G.load_clipboard_provider()
-    autocmd CmdlineEnter * lua _G.load_clipboard_provider()
-  augroup END
-]])
-
--- CMP select mode fix
-vim.keymap.set("s", "c", function()
-  vim.api.nvim_feedkeys("c", "n", false)
-end, { silent = true, remap = false, desc = "Don't paste in select mode" })
-vim.keymap.set("s", "p", function()
-  vim.api.nvim_feedkeys("p", "n", false)
-end, { silent = true, remap = false, desc = "Don't paste in select mode" })
-
-
--- Auto update git checkout
-vim.cmd("set autoread | au CursorHold * checktime")
