@@ -110,3 +110,6 @@ vim.keymap.set("s", "p", function()
   vim.api.nvim_feedkeys("p", "n", false)
 end, { silent = true, remap = false, desc = "Don't paste in select mode" })
 
+
+-- Auto update git checkout
+vim.cmd("set autoread | au CursorHold * checktime")
