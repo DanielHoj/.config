@@ -14,12 +14,20 @@ return {
     -- Useful status updates for LSP
     -- https://github.com/j-hui/fidget.nvim
     { 'j-hui/fidget.nvim',                opts = {} },
+    { "nvimtools/none-ls.nvim", }
 
   },
   config = function()
-    require('mason').setup()
-    require('mason-lspconfig').setup({
-      -- Install these LSPs automatically
+    local mason = require('mason')
+    local mason_lspconfig = require('mason-lspconfig')
+    local null_ls = require("null-ls")
+    local lspconfig = require('lspconfig')
+    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local lsp_attach = function(client, bufnr)
+    end
+
+    mason.setup()
+    mason_lspconfig.setup({
       ensure_installed = {
         'lua_ls',
         'ruff',
@@ -29,14 +37,14 @@ return {
         'quick_lint_js',
       }
     })
+    null_ls.setup({
+      sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.completion.spell,
+        null_ls.builtins.formatting.prettier,
+      },
+    })
 
-    local lspconfig = require('lspconfig')
-    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local lsp_attach = function(client, bufnr)
-      -- Create your keybindings here...
-    end
-
-    -- Call setup on each LSP server
     require('mason-lspconfig').setup_handlers({
       function(server_name)
         lspconfig[server_name].setup({
