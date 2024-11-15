@@ -26,4 +26,9 @@ keymap.set("n", '<leader>d?',
 keymap.set("n", '<leader>df', '<cmd>Telescope dap frames<cr>')
 keymap.set("n", '<leader>dh', '<cmd>Telescope dap commands<cr>')
 keymap.set("n", '<leader>de', function() require('telescope.builtin').diagnostics({ default_text = ":E:" }) end)
-
+local dap = require("dap")
+keymap.set("x", "<leader>di", function()
+  local lines = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+  dap.repl.open()
+  dap.repl.execute(table.concat(lines, "\n"))
+end)
