@@ -38,4 +38,3 @@ keymap.set("n", "<leader>qn", ":cnext<CR>")  -- jump to next quickfix list item
 keymap.set("n", "<leader>qp", ":cprev<CR>")  -- jump to prev quickfix list item
 keymap.set("n", "<leader>ql", ":clast<CR>")  -- jump to last quickfix list item
 keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
-
