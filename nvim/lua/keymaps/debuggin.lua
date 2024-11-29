@@ -39,3 +39,25 @@ keymap.set("x", "<leader>di", function()
   dap.repl.open()
   dap.repl.execute(table.concat(lines, "\n"))
 end)
+
+local widgets = require('dap.ui.widgets')
+
+-- Function to close all floating windows
+function _G.close_floating_windows()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= '' then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+end
+
+-- Toggle hover function
+function _G.toggle_hover()
+  -- Open the hover window
+  widgets.hover()
+end
+
+-- Set the keymaps
+vim.api.nvim_set_keymap('n', '<leader>dh', '<cmd>lua toggle_hover()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dq', '<cmd>lua close_floating_windows()<CR>', { noremap = true, silent = true })
